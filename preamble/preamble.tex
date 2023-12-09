@@ -1,0 +1,214 @@
+% preamble.tex
+\documentclass[../main]{subfiles}
+
+\begin{document}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{amsfonts}		% 白抜き文字 \mathbb{} に必要
+\usepackage{amsthm}		% \qedhereに必要?
+\usepackage{amssymb}		% \blacksquareに必要
+\usepackage{exscale}		% \small \largeのときに和記号、積分記号のバランスをよくする
+\usepackage{cases}		% \numcases に必要
+\usepackage{here}
+\usepackage{empheq}		% \empheq
+\usepackage{listings}		% ソースコード
+\usepackage{moreverb}		% ソースコード挿入\listinginputに必要
+\usepackage{framed}
+\usepackage{color}			% \textcolor用
+\usepackage{xcolor}		% orange等
+\usepackage{fancyhdr}		% pagestyle{fancy}用
+\usepackage{tabularx}		% \tabularx環境
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{hyperref, color}  % \hyperref用
+\usepackage{pxjahyper}		% ハイパーリンク
+\usepackage{atbegshi}		% しおりの文字化けを防ぐ
+\usepackage{ascmac} 		% itembox環境
+\usepackage{itembkbx}		% itemsquarebox環境に必要
+\usepackage{braket}		% braket記号
+\usepackage{ulem}			% アンダーライン\uwave{}等
+\usepackage{wrapfig}		% 回り込み表, wraping
+
+\usepackage{docmute}		% ファイル分割用
+\usepackage{subfiles}		% ファイル分割用, \subfiles{}に必要
+
+% しおりの文字化けを防ぐ
+\ifnum 42146=\euc"A4A2
+\AtBeginShipoutFirst{\special{pdf:tounicode EUC-UCS2}}
+\else
+\AtBeginShipoutFirst{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
+\fi
+
+
+% ハイパーリンク設定
+\hypersetup{
+  % しおりの設定
+  bookmarks = true,			% しおりを作る
+  bookmarksnumbered = true,	% しおりのラベルを作る
+  bookmarksopen = true,		% しおりのツリーを開く
+  bookmarksopenlevel = 4,    	% しおりの深さ
+  bookmarkstype = toc,
+  % リンクカラーの設定
+  colorlinks = false,				% カラーリンク
+  anchorcolor = brack,			% アンカーテキストの色指定（デフォルトはblack）
+  linkcolor = red,				% 内部参照リンク用のカラー
+  linkbordercolor = {1 0 0}, 		% RGBリンクを囲むボックスの色（デフォルトは1 0 0）
+  citecolor = green,				% 文献参照用リンク用のカラー 
+  filecolor = magenta,			% ローカルファイルリンクの色指定（デフォルトはmagenta）
+  urlcolor = magenta,			% 外部参照しているurlの色（デフォルトはmagenta）
+  % PDFプロファイルの設定
+  pdfborder={1 0 0},			% RGBリンクを囲むボックスの色（デフォルトは1 0 0）
+  pdftitle={},					% pdfのタイトル
+  pdfauthor={},					% pdfの著者名
+  pdfsubject={},				% pdfのサブタイトル
+  pdfkeywords = {},				% pdfのキーワード
+  % pdfpagemode = UseThumbs	% サムネイル表示
+}
+
+% ページレイアウト
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{第\thechapter 章 \ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\S \hspace{-0.3ex} \thesection \, #1}}
+\fancyhf{}   % 現在のヘッダ、フッタを無効にする
+
+%\fancyhead[CE]{\leftmark}
+%\fancyhead[CO]{\rightmark}
+
+\fancyhead[EL]{\thepage \qquad \footnotesize \bfseries \leftmark}
+\fancyhead[OR]{\footnotesize \bfseries \rightmark  \qquad \normalsize \thepage}
+
+\renewcommand{\headrulewidth}{0pt}		% headerの線の太さ
+\renewcommand{\footrulewidth}{0pt}		% footerの線の太さ
+\addtolength{\headheight}{0.5pt}			% 
+
+\fancypagestyle{plain}{%
+  \fancyhead{}					% plainで定義されたページのヘッダをなしにする
+  % \fancyhead[RE]{\rightmark{} \qquad \bfseries\thepage}
+  % \fancyhead[OL]{\bfseries\thepage \qquad \leftmark}
+  \renewcommand{\headrulewidth}{0pt}	% 罫線をなしにする 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\headheight}{1mm}		%ヘッダの高さを1mmにする
+\setlength{\topmargin}{-12truemm}	%上マージンを変える
+\setlength{\headsep}{8truemm}		% headerと本文の間
+\setlength{\oddsidemargin}{4mm}		% 奇数ページを右にずらす
+\setlength{\evensidemargin}{-4mm}	% 偶数ページを左にずらす
+% \addtolength{\topmargin}{-\headheight}
+\addtolength{\textheight}{35truemm}	%下の余白を変更
+
+\setcounter{tocdepth}{2}		% 目次出力をsubsectionまで書く
+
+% \parindent = 0pt				% インデントなし, ADC用
+
+\newcommand{\divergence}[0]{\mathrm{div}}	% div
+\newcommand{\grad}[0]{\mathrm{grad}}		% grad
+\newcommand{\rot}[0]{\mathrm{rot}}			% rot
+\newcommand{\diff}[0]{\mathrm{d}}			% 微分記号
+
+\newcommand{\Q}[3]{{\noindent \large $[ #1\hspace{-3pt} - \hspace{-3pt} #2 ]$ \textbf{#3}}\\} % 問題番号
+
+\newcommand{\6}[0]{\partial}		% \partialがだるいので\6にする
+\newcommand{\dsum}[0]{\displaystyle \sum}
+\newcommand{\tsum}[0]{\textstyle \sum}
+
+
+% d/dx, d^n/dx^n の出力
+\newcommand{\dx}[1] {
+    {\frac{d^{#1}}{dx^{#1}}}
+}
+
+% d/dz, d^n/dz^n の出力
+\newcommand{\dz}[1] {
+    {\frac{d^{#1}}{dz^{#1}}}
+}
+
+% d/dr, d^n/dr^n の出力
+\newcommand{\dr}[1] {
+    {\frac{d^{#1}}{dr^{#1}}}
+}
+
+% d/dt, d^n/dt^n の出力
+\newcommand{\dt}[1] {
+    {\frac{d^{#1}}{dt^{#1}}}
+}
+
+% 少々荒っぽいが
+\renewcommand{\(}[0]{\left(}
+\renewcommand{\)}[0]{\right)}
+\renewcommand{\[}[0]{\left[}
+\renewcommand{\]}[0]{\right]}
+
+
+% Appendix
+\renewcommand{\appendixname}{Appendix }
+
+
+% itemsquarebox環境の変更
+\newenvironment{ibox}[1]
+{\vspace{4pt}\begin{itemsquarebox}[r]{\small {#1} } }
+{\end{itemsquarebox}\vspace{4pt}}
+
+
+% 証明環境の再定義, ADC用
+\renewenvironment{proof}{\small \bf{[証明]} \normalfont \begin{quote} } {\qed \end{quote}}
+
+
+% 留数Res_{}コマンド作成
+\DeclareMathOperator*{\Res}{Res}
+
+
+% ∵描画関数\sinceの作成
+\def\since{%
+\setlength{\unitlength}{.8pt}%
+\thinlines %
+\begin{picture}(12,12)%
+\put(0 ,6){.}
+\put(3,0){.}
+\put(6,6){.}
+\end{picture}%
+}%
+
+% ソースコードの書き方設定
+\lstset{
+    basicstyle={\ttfamily\small}, 	% 書体の指定
+    % frame=tRBl, 		% フレームの指定
+    % framesep=10pt, 	% フレームと中身（コード）の間隔
+    breaklines=true,		% 行が長くなった場合の改行
+    linewidth=12cm, 	% フレームの横幅
+    lineskip=-0.5ex, 		% 行間の調整
+    tabsize=2 			% Tabを何文字幅にするかの指定
+}
+
+% jsbook.clsにおける概要のレイアウト設定
+% \makeatletter
+% \renewenvironment{abstract}{%
+%   \titlepage
+%   \null\vfil
+%   \@beginparpenalty\@lowpenalty
+%   \begin{center}%
+%     {\bfseries\abstractname}%
+%     \@endparpenalty\@M
+%   \end{center}}%
+%   {\par\vfil\null\endtitlepage}
+% \renewcommand{\abstractname}{概要}
+% \makeatother
+
+% 式番号に節を追加
+\makeatletter
+  \renewcommand{\theequation}
+  {\arabic{chapter}.\arabic{section}.\arabic{equation}}
+  \@addtoreset{equation}{section}
+ \makeatother
+
+% 番号の深さ指定, 3..subsubsectionまで  4..paragraphまで
+\setcounter{secnumdepth}{3}
+
+
+\title{\HUGE 特殊関数\\　\Large
+	―Hermite, Laguerre, Legendre, Bessel―}
+\author{}
+\date{}
+
+
+\end{document}

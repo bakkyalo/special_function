@@ -1,0 +1,11 @@
+2019.2.27.1708/
+fig/legendre/orbital/
+fig/legendre/Ylm/
+*.aux
+*.dvi
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+
